@@ -1,0 +1,46 @@
+name: Repo Dispatcher
+
+on: 
+  # push: 
+  #   branches:
+  #     - main
+  schedule:
+   - cron: 00 00 * * 6
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version'
+        required: false
+        default: 'R22.04'
+
+env:
+  REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
+  TZ: Asia/Shanghai
+
+jobs:
+  Dispatch:
+    runs-on: Ubuntu-20.04
+    steps:
+    - name: Trigger Compile
+      run: |
+        sudo timedatectl set-timezone "$TZ"
+          curl \
+          -X POST https://api.github.com/repos/womade/OpenWrt-Packages/dispatches \
+          -H "Accept: application/vnd.github.everest-preview+json" \
+          -H "Authorization: token ${{ secrets.R_TOKEN }}" \
+          -d '{"event_type": "Update Packages 🆙"'
+          curl \
+          -X POST https://api.github.com/repos/${{ github.repository }}/dispatches \
+          -H "Accept: application/vnd.github.everest-preview+json" \
+          -H "Authorization: token ${{ secrets.R_TOKEN }}" \
+          -d '{"event_type": "Build ${{ github.event.inputs.version }}", "client_payload": {"target": "x86/64", "model": "generic"}}'
+          curl \
+          -X POST https://api.github.com/repos/${{ github.repository }}/dispatches \
+          -H "Accept: application/vnd.github.everest-preview+json" \
+          -H "Authorization: token ${{ secrets.R_TOKEN }}" \
+          -d '{"event_type": "Build ${{ github.event.inputs.version }}", "client_payload": {"target": "armvirt/64", "model": "plus"}}'
+          curl \
+          -X POST https://api.github.com/repos/${{ github.repository }}/dispatches \
+          -H "Accept: application/vnd.github.everest-preview+json" \
+          -H "Authorization: token ${{ secrets.R_TOKEN }}" \
+          -d '{"event_type": "Build ${{ github.event.inputs.version }}", "client_payload": {"target": "armvirt/64", "model": "mini"}}'

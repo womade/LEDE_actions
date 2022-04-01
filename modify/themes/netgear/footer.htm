@@ -1,0 +1,32 @@
+<%
+	local ver = require "luci.version"
+	local disp = require "luci.dispatcher"
+	local request  = disp.context.path
+	local category = request[1]
+	local tree = disp.node()
+	local categories = disp.node_childs(tree)
+%>
+                </div>
+                <footer class="mobile-hide" style="text-align:center">
+                    <a href="https://github.com/openwrt/luci">Powered by <%= ver.luciname %> (<%= ver.luciversion %>)</a> /
+                    <a href="https://openwrt.org/"><%= ver.distversion %></a>
+                    <br>
+                    <a href="https://i.ssss.fun">Copyright © 1998 - <script>document.write(new Date().getFullYear());</script> 中國遠徵 All Rights Reserved</a>
+                    <% if #categories > 1 then %>
+                    <ul class="breadcrumb pull-right" id="modemenu">
+                        <% for i, r in ipairs(categories) do %>
+                        <li<% if request[1] == r then %> class="active"<%end%>><a href="<%=controller%>/<%=r%>/"><%=striptags(translate(tree.nodes[r].title))%></a> <span class="divider">|</span></li>
+                        <% end %>
+                    </ul>
+                    <% end %>
+                </footer>
+            </div>
+        </div>
+
+    <script>
+        var luciLocation = <%= luci.http.write_json(luci.dispatcher.context.path) %>;
+    </script>
+    <script src="<%=media%>/js/jquery.min.js?v=git-17.016.25656-a85807d"></script>
+    <script src="<%=media%>/js/script.js?v=git-17.016.25656-a85807d"></script>
+</body>
+</html>

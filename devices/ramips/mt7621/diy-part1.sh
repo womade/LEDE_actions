@@ -17,7 +17,7 @@ fi
 
 
 ### 修改为R4A千兆版Breed直刷版
-if grep -q JDC-1 .yuanzheng;
+if grep -q MI-R4A .yuanzheng;
 then
 export shanchu1=$(grep  -a -n -e '&spi0 {' target/linux/ramips/dts/mt7621_xiaomi_mi-router-4a-3g-v2.dtsi|cut -d ":" -f 1)
 export shanchu2=$(grep  -a -n -e '&pcie {' target/linux/ramips/dts/mt7621_xiaomi_mi-router-4a-3g-v2.dtsi|cut -d ":" -f 1)

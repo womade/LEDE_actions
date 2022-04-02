@@ -12,3 +12,8 @@
 
 # Add a feed source
 #sed -i '$a src-git lienol https://github.com/Lienol/openwrt-package' feeds.conf.default
+
+
+if [ ${{ github.event.client_payload.model || github.event.inputs.model }} == "JDC-1" ]; then
+  cp -rf $GITHUB_WORKSPACE/JDC-1/* ./
+fi

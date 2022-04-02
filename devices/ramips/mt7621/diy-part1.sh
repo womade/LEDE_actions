@@ -18,8 +18,8 @@
 cat .config | while read content
 do
 if [ $content = jdcloud_re-sp-01b=y ]; then
-  cp -rf $GITHUB_WORKSPACE/patch/JDC-1.tar.gz $GITHUB_WORKSPACE/openwrt
-  tar -zxvf JDC-1.tar.gz
-  rm -rf JDC-1.tar.gz
+cp -rf $GITHUB_WORKSPACE/patch/JDC-1.tar.gz $GITHUB_WORKSPACE/openwrt
+tar -zxvf JDC-1.tar.gz
+rm -rf JDC-1.tar.gz
 fi
 done

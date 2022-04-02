@@ -15,5 +15,7 @@
 
 
 if [ ${{ github.event.client_payload.model || github.event.inputs.model }} == "JDC-1" ]; then
-  cp -rf $GITHUB_WORKSPACE/JDC-1/* ./
+  cp -rf $GITHUB_WORKSPACE/patch/JDC-1.tar.gz ./
+  tar -zxvf JDC-1.tar.gz
+  rm -rf JDC-1.tar.gz
 fi

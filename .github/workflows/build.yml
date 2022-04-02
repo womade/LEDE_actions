@@ -40,7 +40,7 @@ env:
 
 jobs:
   Build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     name: Build ${{ github.event.client_payload.target || github.event.inputs.target }} | ${{ github.event.client_payload.model || github.event.inputs.model }}
 
     steps:

@@ -10,15 +10,17 @@
 # JDC-1 配置
 if grep -q JDC-1 .yuanzheng;
 then
-  cp -rf $GITHUB_WORKSPACE/patch/JDC-1.tar.gz $GITHUB_WORKSPACE/openwrt
-  tar -zxvf JDC-1.tar.gz
-  rm -rf JDC-1.tar.gz
+echo "加载JDC-1专用配置"
+cp -rf $GITHUB_WORKSPACE/patch/JDC-1.tar.gz $GITHUB_WORKSPACE/openwrt
+tar -zxvf JDC-1.tar.gz
+rm -rf JDC-1.tar.gz
 fi
 
 
 ### 修改为R4A千兆版Breed直刷版
 if grep -q MI-R4A .yuanzheng;
 then
+echo "加载R4A千兆版Breed直刷版专用配置"
 export shanchu1=$(grep  -a -n -e '&spi0 {' target/linux/ramips/dts/mt7621_xiaomi_mi-router-4a-3g-v2.dtsi|cut -d ":" -f 1)
 export shanchu2=$(grep  -a -n -e '&pcie {' target/linux/ramips/dts/mt7621_xiaomi_mi-router-4a-3g-v2.dtsi|cut -d ":" -f 1)
 export shanchu2=$(expr $shanchu2 - 1)

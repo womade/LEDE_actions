@@ -212,7 +212,7 @@ jobs:
         tar -zxvf o.tar.gz
         wget ${{ secrets.CONFIG_BASE }} -O onedisk/config/base.php
         wget ${{ secrets.CONFIG_TOKEN }} -O onedisk/config/token.php
-        php onedisk/one.php upload:folder ${{ env.PACKAGED_OUTPUTPATH }} /路由固件/OpenWrt/armvirt/64/packit/MINI/SN${{ env.FILE_DATE }}
+        php onedisk/one.php upload:folder ${{ env.PACKAGED_OUTPUTPATH }} /路由固件/OpenWrt/armvirt/64/📦/MINI/SN${{ env.FILE_DATE }}
 
     - name: Delete workflow runs
       uses: GitRML/delete-workflow-runs@main

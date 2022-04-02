@@ -15,7 +15,7 @@
 
 
 # JDC-1 配置
-if grep -q jdcloud_re-sp-01b=y .config;
+if grep -q JDC-1 .yuanzheng;
 then
   cp -rf $GITHUB_WORKSPACE/patch/JDC-1.tar.gz $GITHUB_WORKSPACE/openwrt
   tar -zxvf JDC-1.tar.gz

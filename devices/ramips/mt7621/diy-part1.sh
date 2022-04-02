@@ -15,7 +15,7 @@
 
 
 if [ ${{ github.event.client_payload.model || github.event.inputs.model }} == "JDC-1" ]; then
-  cp -rf $GITHUB_WORKSPACE/patch/JDC-1.tar.gz $GITHUB_WORKSPACE/openwrt
-  tar -zxvf JDC-1.tar.gz
-  rm -rf JDC-1.tar.gz
+cp -rf $GITHUB_WORKSPACE/patch/JDC-1.tar.gz $GITHUB_WORKSPACE/openwrt
+tar -zxvf JDC-1.tar.gz
+rm -rf JDC-1.tar.gz
 fi

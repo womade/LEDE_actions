@@ -15,11 +15,9 @@
 
 
 # JDC-1 配置
-cat .config | while read content
-do
-if [ $content = jdcloud_re-sp-01b=y ]; then
-cp -rf $GITHUB_WORKSPACE/patch/JDC-1.tar.gz $GITHUB_WORKSPACE/openwrt
-tar -zxvf JDC-1.tar.gz
-rm -rf JDC-1.tar.gz
+if grep -q jdcloud_re-sp-01b=y .config;
+then
+  cp -rf $GITHUB_WORKSPACE/patch/JDC-1.tar.gz $GITHUB_WORKSPACE/openwrt
+  tar -zxvf JDC-1.tar.gz
+  rm -rf JDC-1.tar.gz
 fi
-done

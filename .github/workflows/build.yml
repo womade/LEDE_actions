@@ -67,16 +67,21 @@ jobs:
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
+    - name: Make a parameter file
+      run: |
+        cd openwrt
+        touch .yuanzheng
+        echo "CPU 架构：${{ github.event.client_payload.target || github.event.inputs.target }}" >> .yuanzheng
+        echo "设备型号：${{ github.event.client_payload.model || github.event.inputs.model }}" >> .yuanzheng
+
     - name: Load custom feeds
       run: |
         [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
-        [ -e $CONFIG_FILE ] && cp $CONFIG_FILE openwrt/.config
         chmod +x $CM_P1_SH
         chmod +x $DIY_P1_SH
         cd openwrt
         $GITHUB_WORKSPACE/$CM_P1_SH
         $GITHUB_WORKSPACE/$DIY_P1_SH
-        rm -rf .config
 
     - name: Update feeds
       run: cd openwrt && ./scripts/feeds update -a

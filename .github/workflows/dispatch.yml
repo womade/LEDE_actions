@@ -19,7 +19,7 @@ env:
 
 jobs:
   Dispatch:
-    runs-on: Ubuntu-20.04
+    runs-on: Ubuntu-latest
     steps:
     - name: Trigger Compile
       run: |

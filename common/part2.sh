@@ -52,7 +52,6 @@ cp -r modify/themes/netgear/nlogo.png feeds/luci/themes/luci-theme-netgear/htdoc
 
 # 移除重复软件包
 rm -rf feeds/packages/net/mosdns
-rm -rf feeds/packages/admin/netdata
 rm -rf feeds/luci/themes/luci-theme-argon
 rm -rf feeds/luci/themes/luci-theme-netgear
 rm -rf feeds/luci/applications/luci-app-netdata

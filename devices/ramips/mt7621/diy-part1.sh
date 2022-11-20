@@ -11,9 +11,20 @@
 if grep -q JDC-1 .yuanzheng;
 then
 echo "加载JDC-1专用配置"
-cp -rf $GITHUB_WORKSPACE/patch/JDC-1.tar.gz $GITHUB_WORKSPACE/openwrt
-tar -zxvf JDC-1.tar.gz
-rm -rf JDC-1.tar.gz
+# load dts
+echo '载入 mt7621_jdcloud_re-sp-01b.dts'
+curl --retry 3 -s --globoff "https://github.com/womade/LEDE_actions/raw/main/patch/mt7621_jdcloud_re-sp-01b.dts" -o target/linux/ramips/dts/mt7621_jdcloud_re-sp-01b.dts
+ls -l target/linux/ramips/dts/mt7621_jdcloud_re-sp-01b.dts
+# fix2 + fix4.2
+echo '修补 mt7621.mk'
+sed -i '/Device\/adslr_g7/i\define Device\/jdcloud_re-sp-01b\n  \$(Device\/dsa-migration)\n  \$(Device\/uimage-lzma-loader)\n  IMAGE_SIZE := 32448k\n  DEVICE_VENDOR := JDCloud\n  DEVICE_MODEL := RE-SP-01B\n  DEVICE_PACKAGES := kmod-fs-ext4 kmod-mt7603 kmod-mt7615e kmod-mt7615-firmware kmod-sdhci-mt7620 kmod-usb3 wpad-openssl\nendef\nTARGET_DEVICES += jdcloud_re-sp-01b\n\n' target/linux/ramips/image/mt7621.mk
+# fix3 + fix5.2
+echo '修补 02-network'
+sed -i -e '/lenovo,newifi-d1|\\/i\        jdcloud,re-sp-01b|\\' -e '/ramips_setup_macs/,/}/{/ampedwireless,ally-00x19k/i\        jdcloud,re-sp-01b)\n\t\tlan_mac=$(mtd_get_mac_ascii u-boot-env mac)\n\t\twan_mac=$(macaddr_add "$lan_mac" 1)\n\t\tlabel_mac=$lan_mac\n\t\t;;
+}' target/linux/ramips/mt7621/base-files/etc/board.d/02_network
+# fix5.1
+echo '修补 system.sh 以正常读写 MAC'
+sed -i 's#key"'\''=//p'\''#& \| head -n1#' package/base-files/files/lib/functions/system.sh
 fi
 
 

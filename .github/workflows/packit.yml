@@ -13,11 +13,11 @@ on:
       openwrt_armvirt_plus:
           description: '请输入PLUS版ROOTFS镜像链接'
           required: true
-          default: 'https://pan.ssss.fun/路由固件/OpenWrt/armvirt/64/plus/openwrt-armvirt-64-default-rootfs.tar.gz'
+          default: 'https://pan.ssss.fun/d/路由固件/OpenWrt/armvirt/64/plus/openwrt-armvirt-64-default-rootfs.tar.gz'
       openwrt_armvirt_mini:
           description: '请输入MINI版ROOTFS镜像链接'
           required: true
-          default: 'https://pan.ssss.fun/路由固件/OpenWrt/armvirt/64/mini/openwrt-armvirt-64-default-rootfs.tar.gz'
+          default: 'https://pan.ssss.fun/d/路由固件/OpenWrt/armvirt/64/mini/openwrt-armvirt-64-default-rootfs.tar.gz'
       package_soc:
           description: '请选择需要编译的机型'
           required: true

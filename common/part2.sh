@@ -27,7 +27,7 @@ sed -i 's/OpenWrt/SuperNet/g' package/base-files/files/bin/config_generate
 cp modify/etc/banner package/base-files/files/etc/banner
 
 # 修改版本号
-sed -i 's/OpenWrt /OpenWrt @YY-ZHENG /g' package/lean/default-settings/files/zzz-default-settings
+sed -i 's/OpenWrt /OpenWrt @Y-ZHENG /g' package/lean/default-settings/files/zzz-default-settings
 sed -i "s|DISTRIB_REVISION='.*'|DISTRIB_REVISION='SN-$(date +%y.%m)'|g" package/lean/default-settings/files/zzz-default-settings
 echo "DISTRIB_SOURCECODE='YUANZHENG'" >>package/base-files/files/etc/openwrt_release
 

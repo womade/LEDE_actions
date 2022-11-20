@@ -8,4 +8,4 @@
 #==================================================
 
 # Add custom packages
-git clone https://github.com/womade/OpenWrt-Packages.git package/yuanzheng
+# git clone https://github.com/womade/OpenWrt-Packages.git package/yuanzheng

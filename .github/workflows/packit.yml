@@ -25,7 +25,7 @@ on:
       kernel_version_name:
           description: '请选择编译使用的内核版本'
           required: true
-          default: '5.4.180_5.10.80_5.15.30_5.16.16'
+          default: '5.10.155_6.0.9'
 
 env:
   UPLOAD_ARTIFACT: false

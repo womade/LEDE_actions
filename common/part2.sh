@@ -33,11 +33,7 @@ echo "DISTRIB_SOURCECODE='YUANZHENG'" >>package/base-files/files/etc/openwrt_rel
 
 # 修改无线名称
 sed -i 's/OpenWrt/SuperNet/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
-sed -i 's/OpenWrt_2G/SuperNet_2G/g' package/lean/mt/drivers/mt_wifi/files/mt7603.dat
-sed -i 's/OpenWrt_5G/SuperNet_5G/g' package/lean/mt/drivers/mt_wifi/files/mt7612.dat
-sed -i 's/OpenWrt_5G/SuperNet_5G/g' package/lean/mt/drivers/mt_wifi/files/mt7615.1.5G.dat
-sed -i 's/OpenWrt_5G/SuperNet_5G/g' package/lean/mt/drivers/mt_wifi/files/mt7615.dat
-sed -i 's/OpenWrt_5G/SuperNet_5G/g' package/lean/mt/drivers/mt_wifi/files/mt7615.5G.dat
+sed -i 's/OpenWrt/SuperNet/g' package/lean/mt/drivers/mt_wifi/files/*.dat
 
 # 添加主题
 sed -i 's/# CONFIG_PACKAGE_luci-theme-supernet is not set/CONFIG_PACKAGE_luci-theme-supernet=y/g' .config

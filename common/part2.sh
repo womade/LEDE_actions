@@ -35,19 +35,6 @@ echo "DISTRIB_SOURCECODE='YUANZHENG'" >>package/base-files/files/etc/openwrt_rel
 sed -i 's/OpenWrt/SuperNet/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
 sed -i 's/OpenWrt/SuperNet/g' package/lean/mt/drivers/mt_wifi/files/*.dat
 
-# 添加主题
-sed -i 's/# CONFIG_PACKAGE_luci-theme-supernet is not set/CONFIG_PACKAGE_luci-theme-supernet=y/g' .config
-
-# 修改主题
-cp -r modify/themes/bootstrap/footer.htm feeds/luci/themes/luci-theme-bootstrap/luasrc/view/themes/bootstrap/footer.htm
-cp -r modify/themes/netgear/footer.htm feeds/luci/themes/luci-theme-netgear/luasrc/view/themes/netgear/footer.htm
-cp -r modify/themes/netgear/nlogo.png feeds/luci/themes/luci-theme-netgear/htdocs/luci-static/netgear/nlogo.png
-
-# 修改默认主题
-# sed -i 's/config internal themes/config internal themes\n    option SuperNet  \"\/luci-static\/supernet\"/g' feeds/luci/modules/luci-base/root/etc/config/luci
-
-
-
 # 移除重复软件包
 rm -rf feeds/packages/net/mosdns
 rm -rf feeds/luci/themes/luci-theme-argon
@@ -105,20 +92,19 @@ svn co https://github.com/fw876/helloworld/trunk/trojan package/trojan
 svn co https://github.com/fw876/helloworld/trunk/redsocks2 package/redsocks2
 
 # Themes
-svn co https://github.com/womade/OpenWrt-Themes/trunk/luci-theme-edge luci-theme-edge
-svn co https://github.com/womade/OpenWrt-Themes/trunk/luci-theme-supernet luci-theme-supernet
-svn co https://github.com/womade/OpenWrt-Themes/trunk/luci-theme-argon luci-theme-argon
-svn co https://github.com/womade/OpenWrt-Themes/trunk/luci-app-argon-config luci-app-argon-config
-svn co https://github.com/rosywrt/luci-theme-rosy/trunk/luci-theme-rosy luci-theme-rosy
-svn co https://github.com/haiibo/packages/trunk/luci-theme-darkmatter luci-theme-darkmatter
-svn co https://github.com/haiibo/packages/trunk/luci-theme-atmaterial luci-theme-atmaterial
-svn co https://github.com/haiibo/packages/trunk/luci-theme-opentomcat luci-theme-opentomcat
-git clone https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom luci-theme-infinityfreedom
-git clone https://github.com/sirpdboy/luci-theme-opentopd luci-theme-opentopd
+git clone --depth 1 -b 18.06 https://github.com/kiddin9/luci-theme-edge package/luci-theme-edge
+git clone --depth 1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon package/luci-theme-argon
+git clone --depth 1 https://github.com/jerrykuku/luci-app-argon-config package/luci-app-argon-config
+git clone --depth 1 https://github.com/thinktip/luci-theme-neobird package/luci-theme-neobird
+git clone --depth 1 https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom package/luci-theme-infinityfreedom
+svn co https://github.com/rosywrt/luci-theme-rosy/trunk/luci-theme-rosy package/luci-theme-rosy
+svn co https://github.com/haiibo/packages/trunk/luci-theme-atmaterial package/luci-theme-atmaterial
+svn co https://github.com/haiibo/packages/trunk/luci-theme-opentomcat package/luci-theme-opentomcat
+svn co https://github.com/haiibo/packages/trunk/luci-theme-netgear package/luci-theme-netgear
 
 # 晶晨宝盒
 svn co https://github.com/ophub/luci-app-amlogic/trunk/luci-app-amlogic package/luci-app-amlogic
-sed -i "s|https.*/OpenWrt|https://github.com/womade/LEDE_actions|g" package/luci-app-amlogic/root/etc/config/amlogic
+sed -i "s|https.*/OpenWrt|https://github.com/haiibo/OpenWrt|g" package/luci-app-amlogic/root/etc/config/amlogic
 sed -i "s|opt/kernel|https://github.com/ophub/kernel/tree/main/pub/stable|g" package/luci-app-amlogic/root/etc/config/amlogic
 sed -i "s|ARMv8|ARMv8_PLUS|g" package/luci-app-amlogic/root/etc/config/amlogic
 
@@ -138,19 +124,18 @@ svn co https://github.com/haiibo/packages/trunk/wrtbwmon package/wrtbwmon
 svn co https://github.com/sbwml/luci-app-alist/trunk/luci-app-alist package/luci-app-alist
 svn co https://github.com/sbwml/luci-app-alist/trunk/alist package/alist
 
+# iStore
+svn co https://github.com/linkease/istore-ui/trunk/app-store-ui package/app-store-ui
+svn co https://github.com/linkease/istore/trunk/luci package/istore
+
 # 设置向导
 svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-wizard package/luci-app-wizard
-sed -i 's/"admin"/"admin", "system"/g' package/luci-app-wizard/files/luci/controller/wizard.lua
+sed -i 's/"admin"/"admin", "system"/g' package/luci-app-wizard/luasrc/controller/wizard.lua
 
 # 在线用户
 svn co https://github.com/haiibo/packages/trunk/luci-app-onliner package/luci-app-onliner
 sed -i '/bin\/sh/a\uci set nlbwmon.@nlbwmon[0].refresh_interval=2s' package/lean/default-settings/files/zzz-default-settings
 sed -i '/nlbwmon/a\uci commit nlbwmon' package/lean/default-settings/files/zzz-default-settings
-
-# golang
-sed -i 's/GO_VERSION_MAJOR_MINOR:=.*/GO_VERSION_MAJOR_MINOR:=1.19/g' feeds/packages/lang/golang/golang/Makefile
-sed -i 's/GO_VERSION_PATCH:=.*/GO_VERSION_PATCH:=2/g' feeds/packages/lang/golang/golang/Makefile
-sed -i 's/PKG_HASH:=.*/PKG_HASH:=2ce930d70a931de660fdaf271d70192793b1b240272645bf0275779f6704df6b/g' feeds/packages/lang/golang/golang/Makefile
 
 # 调整 x86 型号只显示 CPU 型号
 sed -i '/h=${g}.*/d' package/lean/autocore/files/x86/autocore
@@ -163,11 +148,13 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=\@GHREPO/PKG_SOURCE_URL:=https:\/\/github\.com/g' {}
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=\@GHCODELOAD/PKG_SOURCE_URL:=https:\/\/codeload\.github\.com/g' {}
 
+# 删除主题强制默认
+find package/luci-theme-*/* -type f -name '*luci-theme-*' -print -exec sed -i '/set luci.main.mediaurlbase/d' {} \;
+
 # 调整 V2ray服务器 到 VPN 菜单
 sed -i 's/services/vpn/g' feeds/luci/applications/luci-app-v2ray-server/luasrc/controller/*.lua
 sed -i 's/services/vpn/g' feeds/luci/applications/luci-app-v2ray-server/luasrc/model/cbi/v2ray_server/*.lua
 sed -i 's/services/vpn/g' feeds/luci/applications/luci-app-v2ray-server/luasrc/view/v2ray_server/*.htm
-
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a

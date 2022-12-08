@@ -172,20 +172,28 @@ jobs:
           💻 设备属性：${{ github.event.client_payload.target || github.event.inputs.target }} | ${{ github.event.client_payload.model || github.event.inputs.model }}
           📃 其他说明：默认IP `10.0.0.1`
 
-    - name: Upload to OneDisk
+#     - name: Upload to OneDisk
+#       run: |
+#         sudo -E apt-get -qq install php php-curl
+#         wget https://github.com/womade/LEDE_actions/raw/main/o.tar.gz -O o.tar.gz
+#         tar -zxvf o.tar.gz
+#         wget ${{ secrets.CONFIG_BASE }} -O onedisk/config/base.php
+#         wget ${{ secrets.CONFIG_TOKEN }} -O onedisk/config/token.php
+#         php onedisk/one.php upload:folder ${{ env.FIRMWARE }} /路由固件/OpenWrt/${{ github.event.client_payload.target || github.event.inputs.target }}/${{ github.event.client_payload.model || github.event.inputs.model }}/SN${{ env.FILE_DATE }}
+#         # php onedisk/one.php upload:folder openwrt/bin /路由固件/OpenWrt/${{ github.event.client_payload.target || github.event.inputs.target }}/${{ github.event.client_payload.model || github.event.inputs.model }}/SN${{ env.FILE_DATE }}/bin
+#         if [ ${{ github.event.client_payload.target || github.event.inputs.target }} == "armvirt/64" ]; then
+#           touch latest.txt
+#           echo "SN${{ env.FILE_DATE }}" >> latest.txt
+#           php onedisk/one.php upload:file latest.txt /路由固件/OpenWrt/${{ github.event.client_payload.target || github.event.inputs.target }}/${{ github.event.client_payload.model || github.event.inputs.model }}/latest.txt
+#         fi
+
+    - name: Upload to AliDrive
+      continue-on-error: true
       run: |
-        sudo -E apt-get -qq install php php-curl
-        wget https://github.com/womade/LEDE_actions/raw/main/o.tar.gz -O o.tar.gz
-        tar -zxvf o.tar.gz
-        wget ${{ secrets.CONFIG_BASE }} -O onedisk/config/base.php
-        wget ${{ secrets.CONFIG_TOKEN }} -O onedisk/config/token.php
-        php onedisk/one.php upload:folder ${{ env.FIRMWARE }} /路由固件/OpenWrt/${{ github.event.client_payload.target || github.event.inputs.target }}/${{ github.event.client_payload.model || github.event.inputs.model }}/SN${{ env.FILE_DATE }}
-        # php onedisk/one.php upload:folder openwrt/bin /路由固件/OpenWrt/${{ github.event.client_payload.target || github.event.inputs.target }}/${{ github.event.client_payload.model || github.event.inputs.model }}/SN${{ env.FILE_DATE }}/bin
-        if [ ${{ github.event.client_payload.target || github.event.inputs.target }} == "armvirt/64" ]; then
-          touch latest.txt
-          echo "SN${{ env.FILE_DATE }}" >> latest.txt
-          php onedisk/one.php upload:file latest.txt /路由固件/OpenWrt/${{ github.event.client_payload.target || github.event.inputs.target }}/${{ github.event.client_payload.model || github.event.inputs.model }}/latest.txt
-        fi
+        wget https://github.com/womade/Build_OpenWrt/raw/main/alidrive -O alidrive
+        wget ${{ secrets.ALIDRIVE_CONFIG }} -O config.yaml
+        chmod +x alidrive
+        ./alidrive openwrt/bin/targets/*/ /LEDE/${{ matrix.target }}/$(date +'%Y%m%d-%H')/
 
     - name: Delete workflow runs
       uses: GitRML/delete-workflow-runs@main

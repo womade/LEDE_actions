@@ -193,7 +193,7 @@ jobs:
         wget https://github.com/womade/Build_OpenWrt/raw/main/alidrive -O alidrive
         wget ${{ secrets.ALIDRIVE_CONFIG }} -O config.yaml
         chmod +x alidrive
-        ./alidrive ${{ env.FIRMWARE }}/* /LEDE/${{ github.event.client_payload.target || github.event.inputs.target }}/${{ github.event.client_payload.model || github.event.inputs.model }}/SN${{ env.FILE_DATE }}
+        ./alidrive ${{ env.FIRMWARE }}/*/ /LEDE/${{ github.event.client_payload.target || github.event.inputs.target }}_${{ github.event.client_payload.model || github.event.inputs.model }}/SN${{ env.FILE_DATE }}/
 
     - name: Delete workflow runs
       uses: GitRML/delete-workflow-runs@main

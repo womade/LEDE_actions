@@ -27,7 +27,7 @@ sed -i 's/OpenWrt/SuperNet/g' package/base-files/files/bin/config_generate
 cp modify/etc/banner package/base-files/files/etc/banner
 
 # 修改版本号
-sed -i 's/OpenWrt /OpenWrt @Y-ZHENG /g' package/lean/default-settings/files/zzz-default-settings
+sed -i 's/OpenWrt /OpenWrt @ Y-ZHENG /g' package/lean/default-settings/files/zzz-default-settings
 sed -i "s|DISTRIB_REVISION='.*'|DISTRIB_REVISION='SN-$(date +%y.%m)'|g" package/lean/default-settings/files/zzz-default-settings
 echo "DISTRIB_SOURCECODE='YUANZHENG'" >>package/base-files/files/etc/openwrt_release
 
@@ -101,6 +101,7 @@ svn co https://github.com/rosywrt/luci-theme-rosy/trunk/luci-theme-rosy package/
 svn co https://github.com/haiibo/packages/trunk/luci-theme-atmaterial package/luci-theme-atmaterial
 svn co https://github.com/haiibo/packages/trunk/luci-theme-opentomcat package/luci-theme-opentomcat
 svn co https://github.com/haiibo/packages/trunk/luci-theme-netgear package/luci-theme-netgear
+svn co https://github.com/womade/OpenWrt-Themes/trunk/luci-theme-supernet package/luci-theme/supernet
 
 # 晶晨宝盒
 svn co https://github.com/ophub/luci-app-amlogic/trunk/luci-app-amlogic package/luci-app-amlogic
